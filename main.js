@@ -11,6 +11,11 @@ let current = null;
 const bAdd = document.querySelector ('#bAdd');
 const itTask = document.querySelector ('#itTask');
 const form = document.querySelector ('#form');
+const taskName = document.querySelector('#time #taskName');
+
+
+renderTime();
+renderTask();
 
 /*Este evento sucedera cada ves que se haga un submit */
 form.addEventListener('submit', e => {
@@ -38,7 +43,7 @@ function  renderTask(){ /*Es funcion nos permitira agragar o renderizar la salid
     const hmtl = tasks.map(task => {
         return `
             <div class= "task">
-                <div class= "completed">${task.completed ? `<span class="done">Realizado</span>`: `<button class="start-button" data-id="${task.id}">Start</button>`}</div>
+                <div class= "completed">${task.completed ? `<span class="done">¡Tarea Completada!</span>`: `<button class="start-button" data-id="${task.id}">Start</button>`}</div>
                 <div class= "title">${task.title}</div>
             </div>
         `;
@@ -47,6 +52,89 @@ function  renderTask(){ /*Es funcion nos permitira agragar o renderizar la salid
 
     const tasksContainer = document.querySelector('#tasks');
     tasksContainer.innerHTML = hmtl.join('');
+
+    const startButtons = document.querySelectorAll('.task .start-button');
+
+    startButtons.forEach(button => { /*Aqui damos vida a los botones para  que hagan y validen las cosas */
+        button.addEventListener('click', e => {
+            if(!timer){
+                const id = button.getAttribute('data-id');
+                startButttonHandler(id);
+                button.textContent = "Tarea en Progreso...";
+            }
+        });
+    });
 };
+
+
+function startButttonHandler(id){
+    time = 25 * 60;
+    current = id;
+    const taskIndex = tasks.findIndex((task) => task.id == id);
+   
+    taskName.textContent = tasks[taskIndex].title;
+    renderTime();
+    timer = setInterval(() => { /*Aqui manejamos el tiempo */
+        timeHandler(id);
+    },1000);
+}
+
+function timeHandler(id){
+    time--;
+    renderTime();
+
+    if(time == 0){
+        clearInterval(timer);
+        markCompleted(id);
+        timer = null;
+        renderTask();
+        startBreak();
+
+    }
+
+}
+
+
+function renderTime(){
+    const timeDiv = document.querySelector('#time #value');
+    const minutes = parseInt(time / 60);
+    const seconds = parseInt(time % 60);
+
+    timeDiv.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+}
+
+function markCompleted(id){
+    const taskIndex = tasks.findIndex((task) => task.id === id);
+    tasks[taskIndex].completed = true;
+}
+
+
+function startBreak(){
+    time = 1 * 60;
+    taskName.textContent = 'Descanso';
+    renderTime();
+    timerBreak = setInterval(() =>{
+        timerBreakHandler();
+    },1000)
+}
+
+function timerBreakHandler(){
+    time--;
+    renderTime();
+
+    if(time == 0){
+        clearInterval(timerBreak);
+        current = null;
+        timerBreak = null;
+        taskName.textContent = '';
+        renderTask();
+
+    }
+
+}
+
+
+
+
 
 

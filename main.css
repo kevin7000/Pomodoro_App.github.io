@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(255, 185, 127);
+}
+
+#app {
+    border-radius: 36px;
+    background-color: rgb(179, 208, 245);
+    width: 500px;
+    margin: 0 auto;
+    border: solid 1px #ccc;
+    padding: 20px;
+}
+
+/*Aqui a lineamos nuestro contador del tiempo al centrio*/
+#time{
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+#time #value{
+    font-size: 48px;
+    font-weight: bolder;
+}
+
+/*Aqui a lineamos nuestro form al centro para que se vea mejor*/
+.form{
+    display: flex;
+    justify-content: center;
+}
+
+/*Y por ultimo le damos estilos a nuestros inputs de nuestro form*/
+input[type="text"]{
+    border-radius: 36px;
+    padding: 10px;
+    border: 10px;
+    width: 300px;
+}
+
+button,
+input[type="submit"]{
+    border: none;
+    background-color: #003366;
+    color: white;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+    
+}
+
+/*Aqui le damos los estilos a la parte de mostrar las diferentes tareas*/
+#task {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.task{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.task .completed{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/*Aqui le damos los estilos cuando la tarea esta completada*/
+.done{
+    display: inline-block;
+    padding: 5px;
+    background-color: #ccc;
+}
+
+/*Aqui le damos los estilos al autor de la pagina*/
+#autor{
+    font-family: 'Moon Dance', cursive;
+    text-align: center;
+    
+    font-size: 48px;
+    font-weight: bolder;
+}
